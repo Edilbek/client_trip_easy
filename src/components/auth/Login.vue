@@ -1,19 +1,19 @@
 <template>
   <div class="login-form">
     <h2 class="login-heading">Login</h2>
-    <form action="#">
-      <div class="form-control">
+    <form action="#" @submit.prevent="login">
+      <div class="">
         <label for="email">Email</label>
-        <input type="email" name="email" id="email" class="login-input">
+        <input type="email" name="email" id="email" class="login-input" v-model="email">
       </div>
 
-      <div class="form-control mb-more">
+      <div class="mb-more">
         <label for="password">Password</label>
-        <input type="password" name="password" id="password" class="login-input">
+        <input type="password" name="password" id="password" class="login-input" v-model="password">
       </div>
 
-      <div class="form-control">
-        <button type="submit" class="btn-submit">Login</button>
+      <div class="">
+        <button type="submit" class="btn-submit btn-success">Login</button>
       </div>
     </form>
   </div>
@@ -21,7 +21,24 @@
 
 <script>
   export default {
-
+    name: "login",
+    data() {
+      return {
+        email: '',
+        password: ''
+      }
+    },
+    methods: {
+      login() {
+        this.$store.dispatch('retrieveToken', {
+          email: this.email,
+          password: this.password,
+        })
+          .then(response => {
+            this.$router.push({ name: 'home' })
+          })
+      }
+    }
   }
 </script>
 
