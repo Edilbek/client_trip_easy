@@ -1,9 +1,19 @@
 import Vue from 'vue'
-import App from './App.vue'
+import VueRouter from "vue-router";
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import routes from './routes'
+import Master from "./components/layouts/Master";
+
+Vue.use(VueRouter)
+
+const router = new VueRouter({
+  routes
+})
 
 new Vue({
   el: '#app',
-  render: h => h(App)
+  router: router,
+  components: { Master },
+  template: '<Master/>'
 })

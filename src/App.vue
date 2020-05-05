@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <Header />
     <Banner />
     <Search />
     <TripList />
@@ -10,7 +9,6 @@
 </template>
 
 <script>
-  import Header from './components/Header';
   import Banner from './components/Banner';
   import Search from './components/Search';
   import Footer from './components/Footer';
@@ -22,7 +20,6 @@
     components: {
       PlaceList,
       TripList,
-      Header,
       Footer,
       Banner,
       Search,
