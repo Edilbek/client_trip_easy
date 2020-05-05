@@ -11,7 +11,7 @@
                     <router-link :to="{ name: 'home' }" class="nav-link">Home</router-link>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
+                    <router-link :to="{ name: 'about' }" class="nav-link">About</router-link>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Destination</a>
@@ -28,7 +28,7 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
+                    <router-link :to="{ name: 'contact' }" class="nav-link">Contact</router-link>
                 </li>
             </ul>
             <ul class="navbar-nav authentication">

@@ -8,7 +8,8 @@ import Master from "./components/layouts/Master";
 Vue.use(VueRouter)
 
 const router = new VueRouter({
-  routes
+  routes,
+  mode: 'history'
 })
 
 new Vue({
