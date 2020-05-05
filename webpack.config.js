@@ -3,6 +3,9 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 module.exports = {
+  devServer: {
+    historyApiFallback: true // is it enabled ?
+  },
   mode: 'development',
   entry: './src/main.js',
   output: {
