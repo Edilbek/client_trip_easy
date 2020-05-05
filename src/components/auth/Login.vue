@@ -1,19 +1,19 @@
 <template>
   <div class="login-form">
-    <h2 class="login-heading">Login</h2>
+    <h2 class="login-heading">Вход</h2>
     <form action="#" @submit.prevent="login">
       <div class="">
-        <label for="email">Email</label>
+        <label for="email">E-mail</label>
         <input type="email" name="email" id="email" class="login-input" v-model="email">
       </div>
 
       <div class="mb-more">
-        <label for="password">Password</label>
+        <label for="password">Пароль</label>
         <input type="password" name="password" id="password" class="login-input" v-model="password">
       </div>
 
       <div class="">
-        <button type="submit" class="btn-submit btn-success">Login</button>
+        <button type="submit" class="btn-submit btn-success">Войти</button>
       </div>
     </form>
   </div>
