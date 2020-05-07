@@ -20,6 +20,7 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="#">Профиль</a>
                         <a class="dropdown-item" href="#">Мои заявки</a>
+                        <a class="dropdown-item" href="#" v-if="loggedIn">{{currentUser.name}} {{currentUser.surname}}</a>
                     </div>
                 </li>
                 <li class="nav-item">
@@ -50,6 +51,9 @@
         computed: {
           loggedIn() {
             return this.$store.getters.loggedIn
+          },
+          currentUser() {
+            return this.$store.getters.currentUser
           }
         }
     }

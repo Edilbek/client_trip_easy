@@ -56,7 +56,7 @@
     methods: {
       addTrip() {
         this.$store.dispatch('addTrip', {
-          driver: 52,
+          driver: this.$store.getters.currentUser.id,
           point_of_shipment: 2,
           destination: 3,
           date_time: this.date_time,
@@ -64,9 +64,14 @@
           amount_of_seats: parseInt(this.amount_of_seats),
           free_seats: parseInt(this.free_seats),
         })
-          .then(response => {
+          .then((response) => {
             this.$router.push({ name: 'home' })
           })
+      }
+    },
+    computed: {
+      currentUser() {
+        return this.$store.getters.currentUser
       }
     },
     components: {

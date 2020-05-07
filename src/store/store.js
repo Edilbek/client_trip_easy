@@ -8,18 +8,26 @@ axios.defaults.baseURL = 'http://localhost:3000'
 export const store = new Vuex.Store({
   state: {
     token: localStorage.getItem('token') || null,
+    currentUser: JSON.parse(localStorage.getItem('currentUser')) || null,
   },
   getters: {
     loggedIn(state) {
       return state.token !== null
+    },
+    currentUser(state) {
+      return state.currentUser
     }
   },
   mutations: {
     retrieveToken(state, token) {
       state.token = token
     },
+    retrieveUser(state, user) {
+      state.currentUser = user
+    },
     destroyToken(state) {
       state.token = null
+      state.currentUser = null
     }
   },
   actions: {
@@ -36,9 +44,11 @@ export const store = new Vuex.Store({
         })
           .then(response => {
             resolve(response)
+            console.log(data)
           })
           .catch(error => {
             reject(error)
+            console.log(data)
           })
       })
     },
@@ -70,11 +80,13 @@ export const store = new Vuex.Store({
           axios.post('/auth/logout')
             .then(response => {
               localStorage.removeItem('token')
+              localStorage.removeItem('currentUser')
               context.commit('destroyToken')
               resolve(response)
             })
             .catch(error => {
               localStorage.removeItem('token')
+              localStorage.removeItem('currentUser')
               context.commit('destroyToken')
               reject(error)
             })
@@ -88,10 +100,13 @@ export const store = new Vuex.Store({
           password: credentials.password,
         })
           .then(response => {
-            const token = response.data
+            const token = response.data.token
+            const user = response.data.user
 
             localStorage.setItem('token', token)
+            localStorage.setItem('currentUser', JSON.stringify(user))
             context.commit('retrieveToken', token)
+            context.commit('retrieveUser', user)
             resolve(response)
           })
           .catch(error => {
