@@ -4,6 +4,7 @@ import Register from  './components/auth/Register';
 import Logout from './components/auth/Logout';
 import About from './components/marketing/About';
 import Contact from './components/marketing/Contact';
+import Profile from './components/marketing/Profile';
 import AddTrip from "./components/trip/AddTrip";
 import City from "./components/City";
 
@@ -57,6 +58,14 @@ const routes = [
       requiresAuth: true
     }
   },
+  {
+    path: '/profile',
+    name: 'profile',
+    component: Profile,
+    meta: {
+      requiresAuth: true
+    }
+  }
 ]
 
 export default routes
