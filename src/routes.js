@@ -4,6 +4,8 @@ import Register from  './components/auth/Register';
 import Logout from './components/auth/Logout';
 import About from './components/marketing/About';
 import Contact from './components/marketing/Contact';
+import AddTrip from "./components/trip/AddTrip";
+import City from "./components/City";
 
 const routes = [
   {
@@ -36,15 +38,25 @@ const routes = [
     path: '/about',
     name: 'about',
     component: About,
-    meta: {
-      requiresAuth: true
-    }
   },
   {
     path: '/contact',
     name: 'contact',
     component: Contact
-  }
+  },
+  {
+    path: '/cities',
+    name: 'cities',
+    component: City
+  },
+  {
+    path: '/addTrip',
+    name: 'addTrip',
+    component: AddTrip,
+    meta: {
+      requiresAuth: true
+    }
+  },
 ]
 
 export default routes

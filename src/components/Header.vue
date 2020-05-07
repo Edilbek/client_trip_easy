@@ -8,21 +8,22 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <router-link :to="{ name: 'about' }" class="nav-link">О нас</router-link>
+                    <a class="nav-link" href="#">Направления</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Направления</a>
+                    <router-link :to="{ name: 'cities' }" class="nav-link">Список городов</router-link>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Страницы
+                      Еще
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Something else here</a>
+                        <a class="dropdown-item" href="#">Профиль</a>
+                        <a class="dropdown-item" href="#">Мои заявки</a>
                     </div>
+                </li>
+                <li class="nav-item">
+                    <router-link :to="{ name: 'about' }" class="nav-link">О нас</router-link>
                 </li>
                 <li class="nav-item">
                     <router-link :to="{ name: 'contact' }" class="nav-link">Контакты</router-link>

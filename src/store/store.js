@@ -23,6 +23,25 @@ export const store = new Vuex.Store({
     }
   },
   actions: {
+    addTrip(context, data) {
+      return new Promise((resolve, reject) => {
+        axios.post('/trips', {
+          driver: data.driver,
+          point_of_shipment: data.point_of_shipment,
+          destination: data.destination,
+          date_time: data.date_time,
+          price: data.price,
+          amount_of_seats: data.amount_of_seats,
+          free_seats: data.free_seats,
+        })
+          .then(response => {
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
     register(context, data) {
       return new Promise((resolve, reject) => {
         axios.post('/users', {

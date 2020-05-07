@@ -8,7 +8,7 @@
                             <div class="slider_text text-center">
                                 <h3>Kyrgyzstan</h3>
                                 <p>People don't take trips, trips take people.</p>
-                                <a href="#" class="boxed-btn3">Explore Now</a>
+                                <router-link :to="{name: 'addTrip'}" class="boxed-btn3">Добавить маршрут</router-link>
                             </div>
                         </div>
                     </div>
