@@ -4,12 +4,22 @@
     <form action="#" @submit.prevent="addTrip">
       <div class="">
         <label for="point_of_shipment">Точка отправки</label>
-        <input type="text" name="point_of_shipment" id="point_of_shipment" class="login-input" v-model="point_of_shipment">
+        <select v-model="point_of_shipment" class="login-input form-control mb-0" required="required">
+          <option value="">Выберите город</option>
+          <option v-for="city in cities" v-bind:value="city.id" :key="city.id" id="point_of_shipment" >
+            {{ city.name }}
+          </option>
+        </select>
       </div>
 
       <div class="">
         <label for="destination">Конечная точка</label>
-        <input type="text" name="destination" id="destination" class="login-input" v-model="destination">
+        <select v-model="destination" class="login-input form-control mb-0" required="required">
+          <option value="">Выберите город</option>
+          <option v-for="city in cities" v-bind:value="city.id" :key="city.id" id="destination">
+            {{ city.name }}
+          </option>
+        </select>
       </div>
 
       <div class="">
@@ -40,7 +50,8 @@
 </template>
 
 <script>
-  import Datepicker from 'vuejs-datepicker';
+  import Datepicker from 'vuejs-datepicker'
+  import axios from 'axios';
   export default {
     data() {
       return {
@@ -51,23 +62,33 @@
         price: '',
         amount_of_seats: '',
         free_seats: '',
+        cities: []
       }
     },
     methods: {
       addTrip() {
         this.$store.dispatch('addTrip', {
           driver: this.$store.getters.currentUser.id,
-          point_of_shipment: 2,
-          destination: 3,
+          point_of_shipment: this.point_of_shipment,
+          destination: this.destination,
           date_time: this.date_time,
           price: parseInt(this.price),
           amount_of_seats: parseInt(this.amount_of_seats),
           free_seats: parseInt(this.free_seats),
         })
           .then((response) => {
-            this.$router.push({ name: 'home' })
+            this.$router.push({name: 'showTrip'})
           })
       }
+    },
+    created() {
+      axios.get(`http://localhost:3000/cities`)
+        .then(response => {
+          this.cities = response.data
+        })
+        .catch(e => {
+          this.errors.push(e)
+        })
     },
     computed: {
       currentUser() {
