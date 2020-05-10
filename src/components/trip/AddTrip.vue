@@ -7,7 +7,7 @@
           <label for="point_of_shipment">Точка отправки</label>
           <select v-model="point_of_shipment" class="login-input form-control mb-0" required="required">
             <option value="">Выберите город</option>
-            <option v-for="city in cities" :value="city.attribute" :key="city.id" id="point_of_shipment" >
+            <option v-for="city in cities" :value="city.id" :key="city.id" id="point_of_shipment" >
               {{ city.name }}
             </option>
           </select>
@@ -16,7 +16,7 @@
         <div>
           <label for="waypoints">Промежуточные точки</label>
           <select v-model="waypoints" class="login-input form-control mb-0" multiple="true" id="waypoints">
-            <option v-for="city in cities" :value="city.attribute" :key="city.id">
+            <option v-for="city in cities" :value="city.id" :key="city.id">
               {{ city.name }}
             </option>
           </select>
@@ -26,7 +26,7 @@
           <label for="destination">Конечная точка</label>
           <select v-model="destination" class="login-input form-control mb-0" required="required" @change='runGmap'>
             <option value="">Выберите город</option>
-            <option v-for="city in cities" :value="city.attribute" :key="city.id" id="destination">
+            <option v-for="city in cities" :value="city.id" id="destination" :key="city.id">
               {{ city.name }}
             </option>
           </select>
@@ -98,11 +98,11 @@
         amount_of_seats: '',
         free_seats: '',
         waypoints: [],
-        cities: []
+        cities: [],
       }
     },
     methods: {
-      addTrip() {
+       addTrip() {
         this.$store.dispatch('addTrip', {
           driver: this.$store.getters.currentUser.id,
           point_of_shipment: this.point_of_shipment,
@@ -117,13 +117,32 @@
           })
       },
       runGmap() {
-        let directionsService = new google.maps.DirectionsService
-        let directionsRenderer = new google.maps.DirectionsRenderer
+        let one = `http://localhost:3000/cities/` + this.point_of_shipment;
+        let two = `http://localhost:3000/cities/` + this.destination;
 
-        directionsRenderer.setMap(this.$refs.googleMap.$mapObject);
-        this.calculateAndDisplayRoute(directionsService, directionsRenderer);
+        const requestOne = axios.get(one);
+        const requestTwo = axios.get(two);
+
+        axios
+          .all([requestOne, requestTwo])
+          .then(
+            axios.spread((...responses) => {
+              getPointsAttr(responses[0].data.attribute, responses[1].data.attribute)
+            })
+          )
+          .catch(errors => {
+            console.error(errors);
+          });
+
+        const getPointsAttr = (pointAttr, destinationAttr) => {
+          let directionsService = new google.maps.DirectionsService
+          let directionsRenderer = new google.maps.DirectionsRenderer
+
+          directionsRenderer.setMap(this.$refs.googleMap.$mapObject);
+          this.calculateAndDisplayRoute(directionsService, directionsRenderer, pointAttr, destinationAttr);
+        }
       },
-      calculateAndDisplayRoute(directionsService, directionsRenderer) {
+      calculateAndDisplayRoute(directionsService, directionsRenderer, pointAttr, destinationAttr) {
         let waypts = [];
         let checkboxArray = this.waypoints;
         for (let i = 0; i < checkboxArray.length; i++) {
@@ -136,14 +155,13 @@
         }
 
         directionsService.route({
-          origin: this.point_of_shipment,
-          destination: this.destination,
+          origin: pointAttr,
+          destination: destinationAttr,
           waypoints: waypts,
           optimizeWaypoints: true,
           travelMode: 'DRIVING'
         }, function(response, status) {
           if (status === 'OK') {
-            console.log(waypts)
             directionsRenderer.setDirections(response);
             let route = response.routes[0];
             let summaryPanel = document.getElementById('directions-panel');

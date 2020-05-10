@@ -18,7 +18,6 @@
       axios.get(`http://localhost:3000/trips`)
         .then(response => {
           this.myTrips = response.data
-          console.log(this.myTrips)
         })
         .catch(e => {
           this.errors.push(e)
