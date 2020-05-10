@@ -19,7 +19,8 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <router-link :to="{name: 'profile'}" class="dropdown-item" v-if="loggedIn">Профиль</router-link>
-                        <a class="dropdown-item" href="#">Мои заявки</a>
+                        <a class="dropdown-item" href="#">Мои маршруты</a>
+                        <a class="dropdown-item" href="#">Мои бронирования</a>
                         <a class="dropdown-item" href="#" v-if="loggedIn">{{currentUser.name}} {{currentUser.surname}}</a>
                     </div>
                 </li>

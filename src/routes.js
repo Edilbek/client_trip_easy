@@ -7,6 +7,7 @@ import Contact from './components/marketing/Contact';
 import Profile from './components/marketing/Profile';
 import AddTrip from "./components/trip/AddTrip";
 import ShowTrip from "./components/trip/ShowTrip";
+import MyListTrip from "./components/trip/MyListTrip";
 import City from "./components/City";
 
 const routes = [
@@ -62,15 +63,20 @@ const routes = [
   {
     path: '/trips/:id',
     name: 'showTrip',
-    component: ShowTrip,
-    meta: {
-      requiresAuth: true
-    }
+    component: ShowTrip
   },
   {
     path: '/profile',
     name: 'profile',
     component: Profile,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/myTrips',
+    name: 'myTrips',
+    component: MyListTrip,
     meta: {
       requiresAuth: true
     }
