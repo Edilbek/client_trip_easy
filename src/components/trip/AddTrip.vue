@@ -16,7 +16,7 @@
         <div>
           <label for="waypoints">Промежуточные точки</label>
           <select v-model="waypoints" class="login-input form-control mb-0" multiple="true" id="waypoints">
-            <option v-for="city in cities" :value="city.attribute" :key="city.id">
+            <option v-for="city in cities" :value="city.id" :key="city.id">
               {{ city.name }}
             </option>
           </select>
@@ -24,12 +24,16 @@
 
         <div class="">
           <label for="destination">Конечная точка</label>
-          <select v-model="destination" class="login-input form-control mb-0" required="required" id="destination" @change='runGmap'>
-            <option value="">Выберите город</option>
+          <select v-model="destination" class="login-input form-control mb-0" required="required"
+            id="destination">
             <option v-for="city in cities" :value="city.id" :key="city.id">
               {{ city.name }}
             </option>
           </select>
+        </div>
+
+        <div class="mt-2">
+          <button type="button" class="btn-primary btn-sm" @click='runGmap'>Показать на карте</button>
         </div>
 
         <div class="">
@@ -92,7 +96,7 @@
       return {
         driver: '',
         point_of_shipment: 4,
-        destination: '',
+        destination: 4,
         date_time: '',
         price: '',
         amount_of_seats: '',
@@ -108,6 +112,7 @@
           point_of_shipment: this.point_of_shipment,
           destination: this.destination,
           date_time: this.date_time,
+          waypoints: this.waypoints,
           price: parseInt(this.price),
           amount_of_seats: parseInt(this.amount_of_seats),
           free_seats: parseInt(this.free_seats),
@@ -142,8 +147,6 @@
       calculateAndDisplayRoute(directionsService, directionsRenderer, pointAttr, destinationAttr) {
         let waypts = [];
         let checkboxArray = document.getElementById('waypoints');
-        console.log(this.waypoints)
-        console.log(checkboxArray)
         for (let i = 0; i < checkboxArray.length; i++) {
           if (checkboxArray.options[i].selected) {
             waypts.push({
@@ -168,7 +171,7 @@
             // For each route, display summary information.
             for (let i = 0; i < route.legs.length; i++) {
               let routeSegment = i + 1;
-              summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
+              summaryPanel.innerHTML += '<b>Отрезок дороги: ' + routeSegment +
                   '</b><br>';
               summaryPanel.innerHTML += route.legs[i].start_address + ' до ';
               summaryPanel.innerHTML += route.legs[i].end_address + '<br>';

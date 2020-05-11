@@ -39,6 +39,7 @@ export const store = new Vuex.Store({
           destination: data.destination,
           date_time: data.date_time,
           price: data.price,
+          waypoints: data.waypoints,
           amount_of_seats: data.amount_of_seats,
           free_seats: data.free_seats,
         })
@@ -47,8 +48,8 @@ export const store = new Vuex.Store({
             console.log(data)
           })
           .catch(error => {
-            console.log(data)
             reject(error)
+            console.log(data)
           })
       })
     },
