@@ -5,9 +5,9 @@
       <form action="#" @submit.prevent="addTrip">
         <div class="">
           <label for="point_of_shipment">Точка отправки</label>
-          <select v-model="point_of_shipment" class="login-input form-control mb-0" required="required">
-            <option value="">Выберите город</option>
-            <option v-for="city in cities" :value="city.id" :key="city.id" id="point_of_shipment" >
+          <select v-model="point_of_shipment" class="login-input form-control mb-0" required="required"
+            id="point_of_shipment">
+            <option v-for="city in cities" :value="city.id" :key="city.id">
               {{ city.name }}
             </option>
           </select>
@@ -16,7 +16,7 @@
         <div>
           <label for="waypoints">Промежуточные точки</label>
           <select v-model="waypoints" class="login-input form-control mb-0" multiple="true" id="waypoints">
-            <option v-for="city in cities" :value="city.id" :key="city.id">
+            <option v-for="city in cities" :value="city.attribute" :key="city.id">
               {{ city.name }}
             </option>
           </select>
@@ -24,9 +24,9 @@
 
         <div class="">
           <label for="destination">Конечная точка</label>
-          <select v-model="destination" class="login-input form-control mb-0" required="required" @change='runGmap'>
+          <select v-model="destination" class="login-input form-control mb-0" required="required" id="destination" @change='runGmap'>
             <option value="">Выберите город</option>
-            <option v-for="city in cities" :value="city.id" id="destination" :key="city.id">
+            <option v-for="city in cities" :value="city.id" :key="city.id">
               {{ city.name }}
             </option>
           </select>
@@ -91,7 +91,7 @@
     data() {
       return {
         driver: '',
-        point_of_shipment: '',
+        point_of_shipment: 4,
         destination: '',
         date_time: '',
         price: '',
@@ -117,11 +117,8 @@
           })
       },
       runGmap() {
-        let one = `http://localhost:3000/cities/` + this.point_of_shipment;
-        let two = `http://localhost:3000/cities/` + this.destination;
-
-        const requestOne = axios.get(one);
-        const requestTwo = axios.get(two);
+        const requestOne = axios.get(`http://localhost:3000/cities/` + this.point_of_shipment);
+        const requestTwo = axios.get(`http://localhost:3000/cities/` + this.destination);
 
         axios
           .all([requestOne, requestTwo])
@@ -144,7 +141,9 @@
       },
       calculateAndDisplayRoute(directionsService, directionsRenderer, pointAttr, destinationAttr) {
         let waypts = [];
-        let checkboxArray = this.waypoints;
+        let checkboxArray = document.getElementById('waypoints');
+        console.log(this.waypoints)
+        console.log(checkboxArray)
         for (let i = 0; i < checkboxArray.length; i++) {
           if (checkboxArray.options[i].selected) {
             waypts.push({
