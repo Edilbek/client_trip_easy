@@ -91,6 +91,7 @@
   import axios from 'axios';
   import * as VueGoogleMaps from 'vue2-google-maps'
 
+
   export default {
     data() {
       return {
@@ -125,35 +126,36 @@
         const requestOne = axios.get(`http://localhost:3000/cities/` + this.point_of_shipment);
         const requestTwo = axios.get(`http://localhost:3000/cities/` + this.destination);
 
-        axios
-          .all([requestOne, requestTwo])
+        const requestThree = axios.post(`http://localhost:3000/cities/waypoints/byIds`, {
+           waypoints: this.waypoints
+        });
+
+        axios.all([requestOne, requestTwo, requestThree])
           .then(
             axios.spread((...responses) => {
-              getPointsAttr(responses[0].data.attribute, responses[1].data.attribute)
+              getPointsAttr(responses[0].data.attribute, responses[1].data.attribute, responses[2].data)
             })
           )
           .catch(errors => {
             console.error(errors);
           });
 
-        const getPointsAttr = (pointAttr, destinationAttr) => {
+        const getPointsAttr = (pointAttr, destinationAttr, waypointsAttr) => {
           let directionsService = new google.maps.DirectionsService
           let directionsRenderer = new google.maps.DirectionsRenderer
 
           directionsRenderer.setMap(this.$refs.googleMap.$mapObject);
-          this.calculateAndDisplayRoute(directionsService, directionsRenderer, pointAttr, destinationAttr);
+          this.calculateAndDisplayRoute(directionsService, directionsRenderer, pointAttr, destinationAttr, waypointsAttr);
         }
       },
-      calculateAndDisplayRoute(directionsService, directionsRenderer, pointAttr, destinationAttr) {
+      calculateAndDisplayRoute(directionsService, directionsRenderer, pointAttr, destinationAttr, waypointsAttr) {
         let waypts = [];
-        let checkboxArray = document.getElementById('waypoints');
-        for (let i = 0; i < checkboxArray.length; i++) {
-          if (checkboxArray.options[i].selected) {
-            waypts.push({
-              location: checkboxArray[i].value,
-              stopover: true
-            });
-          }
+
+        for (let i = 0; i < waypointsAttr.length; i++) {
+          waypts.push({
+            location: waypointsAttr[i],
+            stopover: true
+          });
         }
 
         directionsService.route({
@@ -178,7 +180,7 @@
               summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
             }
           } else {
-            window.alert('Directions request failed due to ' + status);
+            console.log('Directions request failed due to ' + status);
           }
         });
       }
