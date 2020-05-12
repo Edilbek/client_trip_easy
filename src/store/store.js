@@ -45,11 +45,9 @@ export const store = new Vuex.Store({
         })
           .then(response => {
             resolve(response)
-            console.log(data)
           })
           .catch(error => {
             reject(error)
-            console.log(data)
           })
       })
     },
