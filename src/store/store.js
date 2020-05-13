@@ -38,6 +38,7 @@ export const store = new Vuex.Store({
           point_of_shipment: data.point_of_shipment,
           destination: data.destination,
           date_time: data.date_time,
+          time: data.time,
           price: data.price,
           waypoints: data.waypoints,
           amount_of_seats: data.amount_of_seats,

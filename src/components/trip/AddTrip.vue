@@ -42,6 +42,11 @@
         </div>
 
         <div class="">
+          <label for="time">Время</label>
+          <input type="text" name="time" id="time" class="login-input" v-model="time">
+        </div>
+
+        <div class="">
           <label for="price">Цена</label>
           <input type="number" name="price" id="price" class="login-input" v-model="price">
         </div>
@@ -99,6 +104,7 @@
         point_of_shipment: 4,
         destination: 4,
         date_time: '',
+        time: '',
         price: '',
         amount_of_seats: '',
         free_seats: '',
@@ -113,6 +119,7 @@
           point_of_shipment: this.point_of_shipment,
           destination: this.destination,
           date_time: this.date_time,
+          time: this.time,
           waypoints: this.waypoints,
           price: parseInt(this.price),
           amount_of_seats: parseInt(this.amount_of_seats),

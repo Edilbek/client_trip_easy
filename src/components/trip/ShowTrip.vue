@@ -2,6 +2,7 @@
   <div v-if="isLoaded">
     <h4>Направление: {{trip.point_of_shipment.name}} - {{trip.destination.name}}</h4>
     <p>Дата: {{trip.date_time}}</p>
+    <p>Дата: {{trip.time}}</p>
     <p>Цена: {{trip.price}}</p>
     <p>Всего мест: {{trip.amount_of_seats}}</p>
     <p>Свободных мест: {{trip.free_seats}}</p>
