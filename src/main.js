@@ -6,7 +6,9 @@ import routes from './routes'
 import Master from "./components/layouts/Master";
 import { store } from './store/store'
 import * as VueGoogleMaps from 'vue2-google-maps'
+import VueFlashMessage from 'vue-flash-message';
 
+Vue.use(VueFlashMessage);
 Vue.use(VueRouter)
 
 Vue.use(VueGoogleMaps, {

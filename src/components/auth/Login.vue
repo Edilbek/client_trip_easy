@@ -1,6 +1,7 @@
 <template>
   <div class="login-form">
     <h2 class="login-heading">Вход</h2>
+    <flash-message class="myCustomClass"></flash-message>
     <form action="#" @submit.prevent="login">
       <div class="">
         <label for="email">E-mail</label>
@@ -37,11 +38,16 @@
           .then(response => {
             this.$router.push({ name: 'home' })
           })
+          .catch(error => {
+            if(error.response.status == 401) {
+              this.flashError('Неправильный логин/пароль');
+            }
+          })
       }
     }
   }
 </script>
 
 <style lang="scss">
-
+  @import "../../assets/css/vue-flash-message.css"
 </style>
